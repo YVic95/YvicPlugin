@@ -1,0 +1,17 @@
+{
+    "name": "vika/y-vic-plugin",
+    "description": "Plugin example",
+    "type": "project",
+    "license": "GPL",
+    "authors": [
+        {
+            "name": "Vika Yev",
+            "email": "vika@example.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {"Inc\\": "./inc"}   
+    }
+}
