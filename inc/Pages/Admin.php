@@ -23,6 +23,10 @@ class Admin extends BaseController
 
     $this->setSubpages();
 
+    $this->setSettings();
+    $this->setSections();
+    $this->setFields();
+
     $this->settings->addPages( $this->pages )->withSubPage( 'Dashboard' )->
     addSubPages( $this->subpages )->register();
   }
@@ -33,6 +37,7 @@ class Admin extends BaseController
         'page_title' => 'Yvic Plugin', 
         'menu_title' => 'Yvic', 
         'capability' => 'manage_options',
+        //necessary for args
         'menu_slug' => 'yvic_plugin', 
         'callback' => array( $this->callbacks, 'adminDashboard' ), 
         'icon_url' => 'dashicons-buddicons-groups', 
@@ -69,4 +74,63 @@ class Admin extends BaseController
       ),
     );
   }
+
+  public function setSettings() {
+    $args = array(
+      array(
+        'option_group' => 'yvic_options_group',
+        'option_name' => 'text_example',
+        'callback' => array( $this->callbacks, 'yvicOptionsGroup' )
+      ),
+      array(
+        'option_group' => 'yvic_options_group',
+        'option_name' => 'first_name'
+      )
+    );
+
+    $this->settings->setSettings( $args );
+  }
+
+  public function setSections() {
+    $args = array(
+      array(
+        'id' => 'yvic_admin_index',
+        'title' => 'Settings',
+        'callback' => array( $this->callbacks, 'yvicAdminSection' ),
+        'page' => 'yvic_plugin'
+      )
+    );
+
+    $this->settings->setSections( $args );
+  }
+
+  public function setFields() {
+    $args = array(
+      array(
+        'id' => 'text_example',
+        'title' => 'Text Example',
+        'callback' => array( $this->callbacks, 'yvicTextExample' ),
+        'page' => 'yvic_plugin',
+        'section' => 'yvic_admin_index',
+        'args' => array(
+          'label_for' => 'text_example',
+          'class' => 'example-class'
+        )
+      ),
+      array(
+        'id' => 'first_name',
+        'title' => 'First Name',
+        'callback' => array( $this->callbacks, 'yvicFirstName' ),
+        'page' => 'yvic_plugin',
+        'section' => 'yvic_admin_index',
+        'args' => array(
+          'label_for' => 'first_name',
+          'class' => 'example-class'
+        )
+      )
+    );
+
+    $this->settings->setFields( $args );
+  }
+
 }
