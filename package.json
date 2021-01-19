@@ -1,0 +1,22 @@
+{
+  "name": "yvic-plugin",
+  "version": "1.0.0",
+  "description": "gulp file for my plugin",
+  "main": "src\\js\\myscript.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YVic95/YvicPlugin.git"
+  },
+  "author": "Victoria",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/YVic95/YvicPlugin/issues"
+  },
+  "homepage": "https://github.com/YVic95/YvicPlugin#readme",
+  "devDependencies": {
+    "gulp": "^4.0.2"
+  }
+}
