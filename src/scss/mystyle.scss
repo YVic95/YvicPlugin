@@ -1,0 +1,48 @@
+@import 'modules/tabs';
+.nav-tabs {
+  display: flex;
+  flex-flow: row wrap;
+  margin-bottom: 0;
+
+  & > li {
+    & > a {
+      margin-right: 2px;
+      line-height:  1.5;
+      padding: 10px;
+      border: 1px solid transparent;
+      border-radius: 4px 4px 0 0;
+      text-decoration: none;
+
+      &:hover {
+        border-top-color: #eee;
+        background-color: #fff;
+      }
+    }
+    &.active > a {
+      @extend %link_a_styles;
+      &:hover {
+        @extend %link_a_styles;
+      }
+      &:focus {
+        @extend %link_a_styles;
+      }
+    }
+  }
+}
+%link_a_styles {
+  color: #555;
+  cursor: default;
+  background-color: #fff;
+  border-bottom-color: transparent;
+}
+.tab-content {
+  & > .tab-pane {
+    display: none;
+    width: 100%;
+    &.active {
+      display: block;
+      padding: 10px;
+      background-color: #fff;
+    }
+  }
+}
