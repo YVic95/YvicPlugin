@@ -14,7 +14,7 @@
       text-decoration: none;
 
       &:hover {
-        border-top-color: #eee;
+        border-top-color: $border_color;
         background-color: #fff;
       }
     }
@@ -30,7 +30,7 @@
   }
 }
 %link_a_styles {
-  color: #555;
+  color: $link_color;
   cursor: default;
   background-color: #fff;
   border-bottom-color: transparent;
