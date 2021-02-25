@@ -6,11 +6,13 @@ namespace Inc\Pages;
 use Inc\Api\SettingsApi;
 use Inc\Base\BaseController;
 use Inc\Api\Callbacks\AdminCallbacks;
+use Inc\Api\Callbacks\ManagerCallbacks;
 
 class Admin extends BaseController
 {
   public $settings;
   public $callbacks;
+  public $callbacks_mngr;
   public $pages = array();
   public $subpages = array();
 
@@ -18,6 +20,7 @@ class Admin extends BaseController
     $this->settings = new SettingsApi();
 
     $this->callbacks = new AdminCallbacks(); 
+    $this->callbacks_mngr = new ManagerCallbacks(); 
 
     $this->setPages();
 
@@ -78,14 +81,50 @@ class Admin extends BaseController
   public function setSettings() {
     $args = array(
       array(
-        'option_group' => 'yvic_options_group',
-        'option_name' => 'text_example',
-        'callback' => array( $this->callbacks, 'yvicOptionsGroup' )
+        'option_group' => 'yvic_plugin_settings',
+        'option_name' => 'cpt_manager',
+        'callback' => array( $this->callbacks_mngr, 'checkSanitize' )
       ),
       array(
-        'option_group' => 'yvic_options_group',
-        'option_name' => 'first_name'
-      )
+        'option_group' => 'yvic_plugin_settings',
+        'option_name' => 'taxonomy_manager',
+        'callback' => array( $this->callbacks_mngr, 'checkSanitize' )
+      ), 
+      array(
+        'option_group' => 'yvic_plugin_settings',
+        'option_name' => 'media_widget',
+        'callback' => array( $this->callbacks_mngr, 'checkSanitize' )
+      ), 
+      array(
+        'option_group' => 'yvic_plugin_settings',
+        'option_name' => 'gallery_manager',
+        'callback' => array( $this->callbacks_mngr, 'checkSanitize' )
+      ), 
+      array(
+        'option_group' => 'yvic_plugin_settings',
+        'option_name' => 'testimonial_manager',
+        'callback' => array( $this->callbacks_mngr, 'checkSanitize' )
+      ), 
+      array(
+        'option_group' => 'yvic_plugin_settings',
+        'option_name' => 'templates_manager',
+        'callback' => array( $this->callbacks_mngr, 'checkSanitize' )
+      ), 
+      array(
+        'option_group' => 'yvic_plugin_settings',
+        'option_name' => 'login_manager',
+        'callback' => array( $this->callbacks_mngr, 'checkSanitize' )
+      ), 
+      array(
+        'option_group' => 'yvic_plugin_settings',
+        'option_name' => 'membership_manager',
+        'callback' => array( $this->callbacks_mngr, 'checkSanitize' )
+      ), 
+      array(
+        'option_group' => 'yvic_plugin_settings',
+        'option_name' => 'chat_manager',
+        'callback' => array( $this->callbacks_mngr, 'checkSanitize' )
+      ), 
     );
 
     $this->settings->setSettings( $args );
@@ -95,8 +134,8 @@ class Admin extends BaseController
     $args = array(
       array(
         'id' => 'yvic_admin_index',
-        'title' => 'Settings',
-        'callback' => array( $this->callbacks, 'yvicAdminSection' ),
+        'title' => 'Settings Manager',
+        'callback' => array( $this->callbacks_mngr, 'adminSectionManager' ),
         'page' => 'yvic_plugin'
       )
     );
@@ -107,27 +146,106 @@ class Admin extends BaseController
   public function setFields() {
     $args = array(
       array(
-        'id' => 'text_example',
-        'title' => 'Text Example',
-        'callback' => array( $this->callbacks, 'yvicTextExample' ),
+        'id' => 'cpt_manager',
+        'title' => 'Activate CPT Manager',
+        'callback' => array( $this->callbacks_mngr, 'checkboxField' ),
         'page' => 'yvic_plugin',
         'section' => 'yvic_admin_index',
         'args' => array(
-          'label_for' => 'text_example',
-          'class' => 'example-class'
+          'label_for' => 'cpt_manager',
+          'class' => 'ui-toggle'
         )
       ),
       array(
-        'id' => 'first_name',
-        'title' => 'First Name',
-        'callback' => array( $this->callbacks, 'yvicFirstName' ),
+        'id' => 'taxonomy_manager',
+        'title' => 'Activate Taxonomy Manager',
+        'callback' => array( $this->callbacks_mngr, 'checkboxField' ),
         'page' => 'yvic_plugin',
         'section' => 'yvic_admin_index',
         'args' => array(
-          'label_for' => 'first_name',
-          'class' => 'example-class'
+          'label_for' => 'taxonomy_manager',
+          'class' => 'ui-toggle'
+        )
+      ),
+      array(
+        'id' => 'media_widget',
+        'title' => 'Activate Media Widget',
+        'callback' => array( $this->callbacks_mngr, 'checkboxField' ),
+        'page' => 'yvic_plugin',
+        'section' => 'yvic_admin_index',
+        'args' => array(
+          'label_for' => 'media_widget',
+          'class' => 'ui-toggle'
+        )
+      ),
+      array(
+        'id' => 'gallery_manager',
+        'title' => 'Activate Gallery Manager',
+        'callback' => array( $this->callbacks_mngr, 'checkboxField' ),
+        'page' => 'yvic_plugin',
+        'section' => 'yvic_admin_index',
+        'args' => array(
+          'label_for' => 'gallery_manager',
+          'class' => 'ui-toggle'
+        )
+      ),
+      array(
+        'id' => 'testimonial_manager',
+        'title' => 'Activate Testimonial Manager',
+        'callback' => array( $this->callbacks_mngr, 'checkboxField' ),
+        'page' => 'yvic_plugin',
+        'section' => 'yvic_admin_index',
+        'args' => array(
+          'label_for' => 'testimonial_manager',
+          'class' => 'ui-toggle'
+        )
+      ),
+      array(
+        'id' => 'templates_manager',
+        'title' => 'Activate Templates Manager',
+        'callback' => array( $this->callbacks_mngr, 'checkboxField' ),
+        'page' => 'yvic_plugin',
+        'section' => 'yvic_admin_index',
+        'args' => array(
+          'label_for' => 'templates_manager',
+          'class' => 'ui-toggle'
+        )
+      ),
+      array(
+        'id' => 'login_manager',
+        'title' => 'Activate Login Manager',
+        'callback' => array( $this->callbacks_mngr, 'checkboxField' ),
+        'page' => 'yvic_plugin',
+        'section' => 'yvic_admin_index',
+        'args' => array(
+          'label_for' => 'login_manager',
+          'class' => 'ui-toggle'
+        )
+      ),
+      array(
+        'id' => 'membership_manager',
+        'title' => 'Activate Membership Manager',
+        'callback' => array( $this->callbacks_mngr, 'checkboxField' ),
+        'page' => 'yvic_plugin',
+        'section' => 'yvic_admin_index',
+        'args' => array(
+          'label_for' => 'membership_manager',
+          'class' => 'ui-toggle'
+        )
+      ),
+      array(
+        'id' => 'chat_manager',
+        'title' => 'Activate Chat Manager',
+        'callback' => array( $this->callbacks_mngr, 'checkboxField' ),
+        'page' => 'yvic_plugin',
+        'section' => 'yvic_admin_index',
+        'args' => array(
+          'label_for' => 'chat_manager',
+          'class' => 'ui-toggle'
         )
       )
+      
+      
     );
 
     $this->settings->setFields( $args );
