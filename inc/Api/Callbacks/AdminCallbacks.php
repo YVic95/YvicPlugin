@@ -23,14 +23,6 @@ class AdminCallbacks extends BaseController
     return require_once( "$this->plugin_path/templates/widgets.php" );
   }
 
-  // public function yvicOptionsGroup( $input ) {
-  //   return $input;
-  // }
-
-  // public function yvicAdminSection() {
-  //   echo 'Check this section!';
-  // }
-
   public function yvicTextExample() {
     $value = esc_attr( get_option( 'text_example' ) );
     echo '<input type="text" class="regular-text" name="text_example" value="'. $value .'" 
