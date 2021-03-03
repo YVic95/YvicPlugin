@@ -79,15 +79,13 @@ class Admin extends BaseController
   }
 
   public function setSettings() {
-    $args = array();
-    foreach( $this->managers as $key => $value ) {
-      
-      $args[] = array(
+    $args = array(
+      array(
         'option_group' => 'yvic_plugin_settings',
-        'option_name' => $key,
+        'option_name' => 'yvic_plugin',
         'callback' => array( $this->callbacks_mngr, 'checkSanitize' )
-      );
-    }
+      )
+    );
     $this->settings->setSettings( $args );
   }
 
@@ -114,6 +112,7 @@ class Admin extends BaseController
         'page' => 'yvic_plugin',
         'section' => 'yvic_admin_index',
         'args' => array(
+          'option_name' => 'yvic_plugin',
           'label_for' => $key,
           'class' => 'ui-toggle'
         ) 
