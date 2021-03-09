@@ -8,13 +8,13 @@ use Inc\Base\BaseController;
 use Inc\Api\Callbacks\AdminCallbacks;
 use Inc\Api\Callbacks\ManagerCallbacks;
 
-class Admin extends BaseController
+class Dashboard extends BaseController
 {
   public $settings;
   public $callbacks;
   public $callbacks_mngr;
   public $pages = array();
-  public $subpages = array();
+  //public $subpages = array();
 
   public function register() {
     $this->settings = new SettingsApi();
@@ -24,14 +24,14 @@ class Admin extends BaseController
 
     $this->setPages();
 
-    $this->setSubpages();
+    //$this->setSubpages();
 
     $this->setSettings();
     $this->setSections();
     $this->setFields();
 
     $this->settings->addPages( $this->pages )->withSubPage( 'Dashboard' )->
-    addSubPages( $this->subpages )->register();
+    register();
   }
 
   public function setPages() {
@@ -49,34 +49,34 @@ class Admin extends BaseController
     );
   }
 
-  public function setSubpages() {
-    $this->subpages = array(
-      array(
-        'parent_slug' => 'yvic_plugin',
-        'page_title' => 'Custom Post Type',
-        'menu_title' => 'CPT',
-        'capability' => 'manage_options', 
-        'menu_slug' => 'yvic_cpt',
-        'callback' => array( $this->callbacks, 'adminCpt' ), 
-      ),
-      array(
-        'parent_slug' => 'yvic_plugin',
-        'page_title' => 'Custom Taxonomies',
-        'menu_title' => 'Taxonomies',
-        'capability' => 'manage_options', 
-        'menu_slug' => 'yvic_taxonomies',
-        'callback' => array( $this->callbacks, 'adminTaxonomies' ), 
-      ),
-      array(
-        'parent_slug' => 'yvic_plugin',
-        'page_title' => 'Custom Widgets',
-        'menu_title' => 'Widgets',
-        'capability' => 'manage_options', 
-        'menu_slug' => 'yvic_widgets',
-        'callback' => array( $this->callbacks, 'adminWidgets' ), 
-      ),
-    );
-  }
+  // public function setSubpages() {
+  //   $this->subpages = array(
+  //     array(
+  //       'parent_slug' => 'yvic_plugin',
+  //       'page_title' => 'Custom Post Type',
+  //       'menu_title' => 'CPT',
+  //       'capability' => 'manage_options', 
+  //       'menu_slug' => 'yvic_cpt',
+  //       'callback' => array( $this->callbacks, 'adminCpt' ), 
+  //     ),
+  //     array(
+  //       'parent_slug' => 'yvic_plugin',
+  //       'page_title' => 'Custom Taxonomies',
+  //       'menu_title' => 'Taxonomies',
+  //       'capability' => 'manage_options', 
+  //       'menu_slug' => 'yvic_taxonomies',
+  //       'callback' => array( $this->callbacks, 'adminTaxonomies' ), 
+  //     ),
+  //     array(
+  //       'parent_slug' => 'yvic_plugin',
+  //       'page_title' => 'Custom Widgets',
+  //       'menu_title' => 'Widgets',
+  //       'capability' => 'manage_options', 
+  //       'menu_slug' => 'yvic_widgets',
+  //       'callback' => array( $this->callbacks, 'adminWidgets' ), 
+  //     ),
+  //   );
+  // }
 
   public function setSettings() {
     $args = array(

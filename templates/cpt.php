@@ -1,1 +1,1 @@
-<h1>CPT Manager works</h1>
+<h1>CPT Manager</h1>
