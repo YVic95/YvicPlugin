@@ -22,7 +22,24 @@ class AdminCallbacks extends BaseController
   public function adminWidgets() {
     return require_once( "$this->plugin_path/templates/widgets.php" );
   }
-
+  public function adminGallery() {
+    return require_once( "$this->plugin_path/templates/gallery.php" );
+  }
+  public function adminTestimonial() {
+    return require_once( "$this->plugin_path/templates/testimonial.php" );
+  }
+  public function adminTemplate() {
+    return require_once( "$this->plugin_path/templates/template_mng.php" );
+  }
+  public function adminChat() {
+    return require_once( "$this->plugin_path/templates/chat.php" );
+  }
+  public function adminMembership() {
+    return require_once( "$this->plugin_path/templates/membership.php" );
+  }
+  public function adminLogin() {
+    return require_once( "$this->plugin_path/templates/login.php" );
+  }
   public function yvicTextExample() {
     $value = esc_attr( get_option( 'text_example' ) );
     echo '<input type="text" class="regular-text" name="text_example" value="'. $value .'" 

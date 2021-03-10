@@ -28,5 +28,12 @@ class BaseController
     );
   }
 
+  public function activated( string $key ) {
+    $option = get_option( 'yvic_plugin' );
+
+    return isset( $option[$key] ) ? $option[$key] : false;
+
+  }
+
 }
 

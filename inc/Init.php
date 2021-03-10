@@ -11,7 +11,15 @@ final class Init
       Pages\Dashboard::class,
       Base\Enqueue::class,
       Base\SettingsLinks::class,
-      Base\CustomPostTypeController::class
+      Base\CustomPostTypeController::class,
+      Base\CustomTaxonomyController::class,
+      Base\WidgetController::class,
+      Base\GalleryController::class,
+      Base\TestimonialController::class,
+      Base\TemplateController::class,
+      Base\LoginController::class,
+      Base\MembershipController::class,
+      Base\ChatController::class
     );
   }
   public static function register_services() {
