@@ -33,5 +33,4 @@ class ManagerCallbacks extends BaseController
             $option_name.'['.$name.']" value="1" class="'.$classes.'" '.( $checked ? 'checked' : '' ).'>
             <label for="'.$name.'"><div></div></label></div>';
     }
-  
 }
