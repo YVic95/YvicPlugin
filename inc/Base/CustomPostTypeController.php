@@ -5,14 +5,19 @@
 namespace Inc\Base;
 use Inc\Api\SettingsApi;
 use Inc\Base\BaseController;
+use Inc\Api\Callbacks\CptCallbacks;
 use Inc\Api\Callbacks\AdminCallbacks;
 
 
 class CustomPostTypeController extends BaseController
 {
+    public $settings;
+
     public $subpages = array();
 
     public $callbacks;
+
+    public $cpt_callbacks;
 
     public $custom_post_types = array();
 
@@ -22,10 +27,16 @@ class CustomPostTypeController extends BaseController
 
         $this->settings = new SettingsApi();
         $this->callbacks = new AdminCallbacks(); 
+        $this->cpt_callbacks = new CptCallbacks(); 
 
         $this->setSubpages();
-        $this->settings->addSubPages( $this->subpages )->register();
 
+        $this->setSettings();
+        $this->setSections();
+        $this->setFields();
+
+        $this->settings->addSubPages( $this->subpages )->register();
+        
         $this->storeCustomPostTypes();
 
         if ( !empty( $this->custom_post_types ) ) {
@@ -46,11 +57,109 @@ class CustomPostTypeController extends BaseController
         );
     }
 
+    public function setSettings() {
+        $args = array(
+            array(
+            'option_group' => 'yvic_plugin_cpt_settings',
+            'option_name' => 'yvic_plugin_cpt',
+            'callback' => array( $this->cpt_callbacks, 'cptSanitize' )
+            )
+        );
+        $this->settings->setSettings( $args );
+    }
+
+    public function setSections() {
+        $args = array(
+          array(
+            'id' => 'yvic_cpt_index',
+            'title' => 'Custom Post Type Manager',
+            'callback' => array( $this->cpt_callbacks, 'cptSectionManager' ),
+            'page' => 'yvic_plugin_cpt'
+          )
+        );
+    
+        $this->settings->setSections( $args );
+      }
+
+      public function setFields() {
+
+        $args = array(
+            //post type id
+            array(
+                'id' => 'post_type',
+                'title' => 'Custom Post Type ID',
+                'callback' => array( $this->cpt_callbacks, 'textField' ),
+                'page' => 'yvic_plugin_cpt',
+                'section' => 'yvic_cpt_index',
+                'args' => array(
+                    'option_name' => 'yvic_plugin_cpt',
+                    'label_for' => 'post_type',
+                    'placeholder' => 'hint: Product'
+                ) 
+            ),
+            //singular name
+            array(
+                'id' => 'singular_name',
+                'title' => 'Singular name',
+                'callback' => array( $this->cpt_callbacks, 'textField' ),
+                'page' => 'yvic_plugin_cpt',
+                'section' => 'yvic_cpt_index',
+                'args' => array(
+                    'option_name' => 'yvic_plugin_cpt',
+                    'label_for' => 'singular_name',
+                    'placeholder' => 'hint: Product'
+                ) 
+            ),
+            //plural name
+            array(
+                'id' => 'plural_name',
+                'title' => 'Plural name',
+                'callback' => array( $this->cpt_callbacks, 'textField' ),
+                'page' => 'yvic_plugin_cpt',
+                'section' => 'yvic_cpt_index',
+                'args' => array(
+                    'option_name' => 'yvic_plugin_cpt',
+                    'label_for' => 'plural_name',
+                    'placeholder' => 'hint: Products'
+                ) 
+            ),
+            //public
+            array(
+                'id' => 'public',
+                'title' => 'Public',
+                'callback' => array( $this->cpt_callbacks, 'checkboxField' ),
+                'page' => 'yvic_plugin_cpt',
+                'section' => 'yvic_cpt_index',
+                'args' => array(
+                    'option_name' => 'yvic_plugin_cpt',
+                    'label_for' => 'public',
+                    'class' => 'ui-toggle'
+                ) 
+            ),
+            //has_archive
+            array(
+                'id' => 'has_archive',
+                'title' => 'Archive',
+                'callback' => array( $this->cpt_callbacks, 'checkboxField' ),
+                'page' => 'yvic_plugin_cpt',
+                'section' => 'yvic_cpt_index',
+                'args' => array(
+                    'option_name' => 'yvic_plugin_cpt',
+                    'label_for' => 'has_archive',
+                    'class' => 'ui-toggle'
+                ) 
+            ),
+            
+        );
+        $this->settings->setFields( $args );
+      }
+
+
     public function storeCustomPostTypes() {
         $this->custom_post_types = array(
             array(
                 'post_type' => 'test',
-                'name' => '',
+                'name' => 'SMth',
                 'singular_name' => '',
                 'add_new' => '',
                 'add_new_item' => '',
