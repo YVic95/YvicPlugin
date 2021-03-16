@@ -94,7 +94,7 @@ class CustomPostTypeController extends BaseController
                 'args' => array(
                     'option_name' => 'yvic_plugin_cpt',
                     'label_for' => 'post_type',
-                    'placeholder' => 'hint: Product'
+                    'placeholder' => 'hint: book'
                 ) 
             ),
             //singular name
@@ -107,7 +107,7 @@ class CustomPostTypeController extends BaseController
                 'args' => array(
                     'option_name' => 'yvic_plugin_cpt',
                     'label_for' => 'singular_name',
-                    'placeholder' => 'hint: Product'
+                    'placeholder' => 'hint: Book'
                 ) 
             ),
             //plural name
@@ -120,7 +120,7 @@ class CustomPostTypeController extends BaseController
                 'args' => array(
                     'option_name' => 'yvic_plugin_cpt',
                     'label_for' => 'plural_name',
-                    'placeholder' => 'hint: Products'
+                    'placeholder' => 'hint: Books'
                 ) 
             ),
             //public
@@ -157,10 +157,10 @@ class CustomPostTypeController extends BaseController
 
     public function storeCustomPostTypes() {
 
-        $option = get_option( 'yvic_plugin_cpt' );
-
-        //foreach ($options as $option) {
-            $this->custom_post_types = array(
+        $options = get_option( 'yvic_plugin_cpt' );
+        //update_option('yvic_plugin_cpt', array(array("post_type" => "book", "singular_name" => "Book", "plural_name" => "Books", "public" => true, "has_archive" => true)));
+        foreach ($options as $option) {
+            $this->custom_post_types[] =
                 array(
                     'post_type' => $option['post_type'],
                     'name' => $option['plural_name'],
@@ -214,17 +214,16 @@ class CustomPostTypeController extends BaseController
                     'supports' => array( 'title', 'editor', 'author', 'thumbnail' ),
                     'taxonomies' => array( 'category', 'post_tag' ),
                     'show_in_rest' => true          
-                )
-            );
+                );
         
-        //}
+        }
 
         
     }
    
     public function registerCustomPostType() {
         foreach( $this->custom_post_types as $post_type ){
-
+            //print_r($post_type);
             register_post_type ( $post_type['post_type'],
                 array(
                     'labels' => array(
