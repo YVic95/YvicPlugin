@@ -14,7 +14,7 @@
             <?php
                 $options = get_option( 'yvic_plugin_cpt' );
             ?>
-            <table>
+            <table id="custom_post_type_table">
                 <tr>
                     <th>ID</th>
                     <th>Singular Name</th>
@@ -33,7 +33,7 @@
                         <td><?=$option['plural_name']?></td>
                         <td><?=$option['public'] ? 'Yes' : 'No'?></td>
                         <td><?=$option['has_archive'] ? 'Yes' : 'No'?></td>
-                        <td><a href="#">EDIT / </a><a href="#">DELETE</a></td>
+                        <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
                     </tr>   
                 <?php 
                     }
