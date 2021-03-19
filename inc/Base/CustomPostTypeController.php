@@ -157,9 +157,14 @@ class CustomPostTypeController extends BaseController
 
     public function storeCustomPostTypes() {
 
-        $options = get_option( 'yvic_plugin_cpt' );
-        //update_option('yvic_plugin_cpt', array(array("post_type" => "book", "singular_name" => "Book", "plural_name" => "Books", "public" => true, "has_archive" => true)));
+        $options = get_option( 'yvic_plugin_cpt' ) ?: array();
+        // var_dump($options);
+        // die();
+        //update_option('yvic_plugin_cpt', array("book" => array("post_type" => "book", "singular_name" => "Book", "plural_name" => "Books", "public" => true, "has_archive" => true)));
+        //die();
         foreach ($options as $option) {
+            //var_dump($option);
+            //die();
             $this->custom_post_types[] =
                 array(
                     'post_type' => $option['post_type'],
@@ -199,7 +204,7 @@ class CustomPostTypeController extends BaseController
     
                     'label' => $option['singular_name'],
                     'description' => $option['plural_name'] . 'Custom Post Type',
-                    'public' => $option['public'],
+                    'public' => isset ( $option['public'] ) && $option['public'],
                     'publicly_queryable' => true,
                     'show_ui' => true,
                     'show_in_menu' => true,
@@ -208,7 +213,7 @@ class CustomPostTypeController extends BaseController
                     'exclude_from_search' => false,
                     'query_var' => true,
                     'capability_type' => 'post',
-                    'has_archive' => $option['has_archive'],
+                    'has_archive' => isset( $option['has_archive'] ) && $option['has_archive'],
                     'hierarchical' => false,
                     'menu_position' => 5,
                     'supports' => array( 'title', 'editor', 'author', 'thumbnail' ),
@@ -222,8 +227,10 @@ class CustomPostTypeController extends BaseController
     }
    
     public function registerCustomPostType() {
+        // var_dump($this->custom_post_types);
+        // die();
         foreach( $this->custom_post_types as $post_type ){
-            //print_r($post_type);
+            
             register_post_type ( $post_type['post_type'],
                 array(
                     'labels' => array(

@@ -12,7 +12,8 @@
             <h3>Manage your Custom Post Type</h3>  
             <!--looping array of cpt --> 
             <?php
-                $options = get_option( 'yvic_plugin_cpt' );
+
+                $options = get_option( 'yvic_plugin_cpt' ) ?: array();
             ?>
             <table id="custom_post_type_table">
                 <tr>
@@ -31,8 +32,8 @@
                         <td><?=$option['post_type']?></td>
                         <td><?=$option['singular_name']?></td>
                         <td><?=$option['plural_name']?></td>
-                        <td><?=$option['public'] ? 'Yes' : 'No'?></td>
-                        <td><?=$option['has_archive'] ? 'Yes' : 'No'?></td>
+                        <td><?=( isset($option['public']) && $option['public'] ) ? 'Yes' : 'No'?></td>
+                        <td><?=( isset($option['has_archive']) && $option['has_archive'] )? 'Yes' : 'No'?></td>
                         <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
                     </tr>   
                 <?php 

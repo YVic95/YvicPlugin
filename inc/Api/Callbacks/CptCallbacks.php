@@ -12,19 +12,12 @@ class CptCallbacks
 
     public function cptSanitize( $input ) {
         $output = get_option('yvic_plugin_cpt');
- 
-        /*foreach( $output as $key => $value ) {
-
-            if( $input['post_type'] === $key ) {
-                $output[$key] = $input;
-            } else {
-                $output[$input['post_type']] = $input;
-            }
-        }*/
+   
         $output[$input['post_type']] = $input;
-        //print_r($output);
-        //die();
+        // var_dump($output);
+        // die();
         return $output;
+
     }
 
     public function textField( $args ) {
