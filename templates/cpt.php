@@ -37,7 +37,25 @@
                         <td><?=$option['plural_name']?></td>
                         <td><?=$public?></td>
                         <td><?=$archive?></td>
-                        <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
+                        <td>
+                            <a href="#">Edit</a> /
+                            
+                            <!--Form for deleting custom post type from array of cpts -->
+
+                            <form method="post" action="options.php" class="inline-block">
+                                <?php
+                                    settings_fields( 'yvic_plugin_cpt_settings' );
+                                    ?>
+                                <input type="hidden" name="remove" value="<?=$option['post_type']?>" />
+                                <?php
+                                    submit_button( 'Delete', 'delete small', 'submit', false, 
+                                        array(
+                                            'onclick' => "return confirm('Are you sure you want delete this custom post type? The data associated with it will not be deleted');"
+                                    ) );
+                                ?>
+                            </form> 
+                        
+                        </td>
                     </tr>   
                 <?php 
                     }

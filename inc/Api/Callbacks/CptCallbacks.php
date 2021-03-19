@@ -11,7 +11,13 @@ class CptCallbacks
     }
 
     public function cptSanitize( $input ) {
+
         $output = get_option('yvic_plugin_cpt');
+
+        if( isset( $_POST["remove"] ) ) {
+            unset( $output[$_POST["remove"]] );
+            return $output;  
+        }
    
         $output[$input['post_type']] = $input;
         // var_dump($output);
