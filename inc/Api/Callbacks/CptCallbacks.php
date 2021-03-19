@@ -26,7 +26,7 @@ class CptCallbacks
         $input = get_option( $option_name );
 
         echo '<input type="text" class="regular-text" id="'. $name .'" name="'. 
-        $option_name.'['.$name.']" value="" placeholder="'. $args['placeholder'] .'"/>';
+        $option_name.'['.$name.']" value="" placeholder="'. $args['placeholder'] .'" required/>';
     }
 
 

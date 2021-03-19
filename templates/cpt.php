@@ -26,14 +26,17 @@
                 </tr>
             
             <?php
+
                 foreach ($options as $option) { 
+                    $public = ( isset($option['public']) && $option['public'] ) ? 'Yes' : 'No';
+                    $archive = ( isset($option['has_archive']) && $option['has_archive'] )? 'Yes' : 'No';
             ?>
                     <tr>
                         <td><?=$option['post_type']?></td>
                         <td><?=$option['singular_name']?></td>
                         <td><?=$option['plural_name']?></td>
-                        <td><?=( isset($option['public']) && $option['public'] ) ? 'Yes' : 'No'?></td>
-                        <td><?=( isset($option['has_archive']) && $option['has_archive'] )? 'Yes' : 'No'?></td>
+                        <td><?=$public?></td>
+                        <td><?=$archive?></td>
                         <td><a href="#">Edit</a> / <a href="#">Delete</a></td>
                     </tr>   
                 <?php 

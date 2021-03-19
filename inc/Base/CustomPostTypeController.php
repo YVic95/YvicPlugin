@@ -204,7 +204,7 @@ class CustomPostTypeController extends BaseController
     
                     'label' => $option['singular_name'],
                     'description' => $option['plural_name'] . 'Custom Post Type',
-                    'public' => isset ( $option['public'] ) && $option['public'],
+                    'public' => isset ( $option['public'] ) ?: false,
                     'publicly_queryable' => true,
                     'show_ui' => true,
                     'show_in_menu' => true,
@@ -213,7 +213,7 @@ class CustomPostTypeController extends BaseController
                     'exclude_from_search' => false,
                     'query_var' => true,
                     'capability_type' => 'post',
-                    'has_archive' => isset( $option['has_archive'] ) && $option['has_archive'],
+                    'has_archive' => isset ( $option['has_archive'] ) ?: false,
                     'hierarchical' => false,
                     'menu_position' => 5,
                     'supports' => array( 'title', 'editor', 'author', 'thumbnail' ),
