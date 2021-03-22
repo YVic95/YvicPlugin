@@ -1,14 +1,22 @@
 <div class="wrap">
     <h1>CPT Manager</h1>
-    <?php settings_errors() ?>
+    <?php settings_errors(); ?>
     
     <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab-1">Your Custom Post Types</a></li>
-        <li><a href="#tab-2">Add Custom Post Type</a></li>
+        <li class=" <?php echo !isset($_POST['edit_post']) ? 'active' : '' ?>">
+            <a href="#tab-1">
+                Your Custom Post Types
+            </a>
+        </li>
+        <li class=" <?php echo isset($_POST['edit_post']) ? 'active' : '' ?> ">
+            <a href="#tab-2" >
+                <?php echo isset($_POST['edit_post']) ? 'Edit' : 'Add' ?> Custom Post Type
+            </a>
+        </li>
         <li><a href="#tab-3">Export</a></li>
     </ul>
     <div class="tab-content">
-        <div id="tab-1" class="tab-pane active">
+        <div id="tab-1" class="tab-pane <?php echo !isset($_POST['edit_post']) ? 'active' : '' ?>">
             <h3>Manage your Custom Post Type</h3>  
             <!--looping array of cpt --> 
             <?php
@@ -38,14 +46,21 @@
                         <td><?=$public?></td>
                         <td><?=$archive?></td>
                         <td>
-                            <a href="#">Edit</a> /
+
+                            <!--edit custom post type form -->
+                            <form method="post" action="" class="inline-block">
+                                <input type="hidden" name="edit_post" value="<?=$option['post_type']?>" />
+                                <?php
+                                    submit_button( 'Edit', 'primary small', 'submit', false );
+                                ?>
+                            </form>
                             
-                            <!--Form for deleting custom post type from array of cpts -->
+                            <!--delete custom post type from array of cpts -->
 
                             <form method="post" action="options.php" class="inline-block">
                                 <?php
                                     settings_fields( 'yvic_plugin_cpt_settings' );
-                                    ?>
+                                ?>
                                 <input type="hidden" name="remove" value="<?=$option['post_type']?>" />
                                 <?php
                                     submit_button( 'Delete', 'delete small', 'submit', false, 
@@ -63,7 +78,7 @@
             </table>
             
         </div>
-        <div id="tab-2" class="tab-pane">
+        <div id="tab-2" class="tab-pane <?php echo isset($_POST['edit_post']) ? 'active' : '' ?> ">
             
             <form method="post" action="options.php">
                 <?php 
