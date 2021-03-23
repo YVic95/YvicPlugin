@@ -158,13 +158,9 @@ class CustomPostTypeController extends BaseController
     public function storeCustomPostTypes() {
 
         $options = get_option( 'yvic_plugin_cpt' ) ?: array();
-        // var_dump($options);
-        // die();
-        //update_option('yvic_plugin_cpt', array("book" => array("post_type" => "book", "singular_name" => "Book", "plural_name" => "Books", "public" => true, "has_archive" => true)));
-        //die();
+
         foreach ($options as $option) {
-            //var_dump($option);
-            //die();
+ 
             $this->custom_post_types[] =
                 array(
                     'post_type' => $option['post_type'],
