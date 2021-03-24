@@ -90,6 +90,15 @@
         </div>
         <div id="tab-3" class="tab-pane">
             <h3>Export your Custom Post Type</h3>
+
+            <pre class="prettyprint">class Voila {
+            public:
+                // Voila
+                static const string VOILA = "Voila";
+                
+                // will not interfere with embedded <a href="#voila2">tags</a>.
+            }</pre>
+            
         </div>
     </div>
 </div>
