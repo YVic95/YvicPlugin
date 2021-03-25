@@ -1,5 +1,5 @@
 <div class="wrap">
-    <h1>CPT Manager</h1>
+    <h1>Custom Post Type Manager</h1>
     <?php settings_errors(); ?>
     
     <ul class="nav nav-tabs">
