@@ -14,3 +14,9 @@
         background-color: #e0ebeb;
     }
 }
+.table_header {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    align-items: center;
+}

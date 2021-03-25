@@ -20,8 +20,8 @@ class CptCallbacks
         }
    
         $output[$input['post_type']] = $input;
-        // var_dump($output);
-        // die();
+        //var_dump($input);
+       // die();
         return $output;
 
     }
@@ -30,15 +30,17 @@ class CptCallbacks
         $name = $args['label_for'];
         $option_name = $args['option_name'];
         $value = '';
-        $disabled = $name == 'post_type' && isset( $_POST['edit_post'] ) ? 'disabled' : '';
+        $hidden = $name == 'post_type' && isset( $_POST['edit_post'] ) ? 'hidden' : 'text';
+        $edit_text = $name == 'post_type' && isset( $_POST['edit_post'] ) ? $_POST['edit_post'] : ' ';
+        
 
         if( isset( $_POST['edit_post'] ) ){
             $input = get_option( $option_name );
 
             $value = $input[$_POST['edit_post']][$name];  
         }
-
-        echo '<input '.$disabled.' type="text" class="regular-text" id="'. $name .'" name="'.$option_name.'['.$name.']" value="'. $value .'" placeholder="'. $args['placeholder'] .'" required/>';
+        echo $edit_text;
+        echo '<input type="'.$hidden.'" class="regular-text" id="'. $name .'" name="'.$option_name.'['.$name.']" value="'. $value .'" placeholder="'. $args['placeholder'] .'" required/>';
     }
 
 

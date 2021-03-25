@@ -3,12 +3,12 @@
     <?php settings_errors(); ?>
     
     <ul class="nav nav-tabs">
-        <li class=" <?php echo !isset($_POST['edit_post']) ? 'active' : '' ?>">
+        <li class=" <?php echo !isset($_POST['edit_post']) && !isset($_POST['add_post'])  ? 'active' : '' ?>">
             <a href="#tab-1">
                 Your Custom Post Types
             </a>
         </li>
-        <li class=" <?php echo isset($_POST['edit_post']) ? 'active' : '' ?> ">
+        <li class=" <?php echo isset($_POST['edit_post']) || isset($_POST['add_post']) ? 'active' : '' ?> ">
             <a href="#tab-2" >
                 <?php echo isset($_POST['edit_post']) ? 'Edit' : 'Add' ?> Custom Post Type
             </a>
@@ -16,8 +16,17 @@
         <li><a href="#tab-3">Export</a></li>
     </ul>
     <div class="tab-content">
-        <div id="tab-1" class="tab-pane <?php echo !isset($_POST['edit_post']) ? 'active' : '' ?>">
-            <h3>Manage your Custom Post Type</h3>  
+        <div id="tab-1" class="tab-pane <?php echo !isset($_POST['edit_post']) && !isset($_POST['add_post']) ? 'active' : '' ?>">
+            <div class="table_header">
+                <h3>Manage your Custom Post Type</h3> 
+                <!--add custom post type form -->
+                <form method="post" action="" class="inline-block">
+                    <input type="hidden" name="add_post" value="add_post" />
+                    <?php
+                        submit_button( 'Add New', 'primary small', 'submit', false );
+                    ?>
+                </form> 
+            </div>
             <!--looping array of cpt --> 
             <?php
 
@@ -78,7 +87,7 @@
             </table>
             
         </div>
-        <div id="tab-2" class="tab-pane <?php echo isset($_POST['edit_post']) ? 'active' : '' ?> ">
+        <div id="tab-2" class="tab-pane <?php echo isset($_POST['edit_post']) || isset($_POST['add_post']) ? 'active' : '' ?> ">
             
             <form method="post" action="options.php">
                 <?php 
