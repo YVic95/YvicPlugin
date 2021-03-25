@@ -88,12 +88,11 @@
             
         </div>
         <div id="tab-2" class="tab-pane <?php echo isset($_POST['edit_taxonomy']) || isset($_POST['add_taxonomy']) ? 'active' : '' ?> ">
-            
             <form method="post" action="options.php">
                 <?php 
-                    //settings_fields( 'yvic_plugin_cpt_settings' );
-                    //do_settings_sections( 'yvic_plugin_cpt' );
-                    //submit_button();
+                    settings_fields( 'yvic_plugin_tax_settings' );
+                    do_settings_sections( 'yvic_plugin_tax' );
+                    submit_button();
                 ?>
             </form>
         </div>

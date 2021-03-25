@@ -81,7 +81,7 @@ class CustomPostTypeController extends BaseController
         $this->settings->setSections( $args );
       }
 
-      public function setFields() {
+    public function setFields() {
 
         $args = array(
             //post type id
@@ -94,7 +94,8 @@ class CustomPostTypeController extends BaseController
                 'args' => array(
                     'option_name' => 'yvic_plugin_cpt',
                     'label_for' => 'post_type',
-                    'placeholder' => 'hint: book'
+                    'placeholder' => 'hint: genre',
+                    'array' => 'post-type'
                 ) 
             ),
             //singular name
@@ -107,7 +108,8 @@ class CustomPostTypeController extends BaseController
                 'args' => array(
                     'option_name' => 'yvic_plugin_cpt',
                     'label_for' => 'singular_name',
-                    'placeholder' => 'hint: Book'
+                    'placeholder' => 'hint: Book',
+                    'array' => 'post-type'
                 ) 
             ),
             //plural name
@@ -120,7 +122,8 @@ class CustomPostTypeController extends BaseController
                 'args' => array(
                     'option_name' => 'yvic_plugin_cpt',
                     'label_for' => 'plural_name',
-                    'placeholder' => 'hint: Books'
+                    'placeholder' => 'hint: Books',
+                    'array' => 'post-type'
                 ) 
             ),
             //public
@@ -133,7 +136,8 @@ class CustomPostTypeController extends BaseController
                 'args' => array(
                     'option_name' => 'yvic_plugin_cpt',
                     'label_for' => 'public',
-                    'class' => 'ui-toggle'
+                    'class' => 'ui-toggle',
+                    'array' => 'post-type'
                 ) 
             ),
             //has_archive
@@ -146,13 +150,14 @@ class CustomPostTypeController extends BaseController
                 'args' => array(
                     'option_name' => 'yvic_plugin_cpt',
                     'label_for' => 'has_archive',
-                    'class' => 'ui-toggle'
+                    'class' => 'ui-toggle',
+                    'array' => 'post-type'
                 ) 
             ),
             
         );
         $this->settings->setFields( $args );
-      }
+    }
 
 
     public function storeCustomPostTypes() {
@@ -204,7 +209,6 @@ class CustomPostTypeController extends BaseController
                     'publicly_queryable' => true,
                     'show_ui' => true,
                     'show_in_menu' => true,
-                    //'show_in_admin_bar' => true,
                     'can_export' => true,
                     'exclude_from_search' => false,
                     'query_var' => true,
@@ -223,8 +227,7 @@ class CustomPostTypeController extends BaseController
     }
    
     public function registerCustomPostType() {
-        // var_dump($this->custom_post_types);
-        // die();
+ 
         foreach( $this->custom_post_types as $post_type ){
             
             register_post_type ( $post_type['post_type'],
@@ -273,7 +276,6 @@ class CustomPostTypeController extends BaseController
                     'can_export' => $post_type['can_export'],
                     'exclude_from_search' => $post_type['exclude_from_search'],
                     'query_var' => $post_type['query_var'],
-                    //'rewrite' => $post_type['rewrite'],
                     'capability_type' => $post_type['capability_type'],
                     'has_archive' => $post_type['has_archive'],
                     'hierarchical' => $post_type['hierarchical'],

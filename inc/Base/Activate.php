@@ -18,6 +18,10 @@ class Activate
     if ( ! get_option( 'yvic_plugin_cpt' ) ) {
       update_option( 'yvic_plugin_cpt', $default );
     }
+
+    if ( ! get_option( 'yvic_plugin_tax' ) ) {
+      update_option( 'yvic_plugin_tax', $default );
+    }
      
    }
 }
