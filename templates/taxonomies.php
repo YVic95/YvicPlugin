@@ -19,72 +19,67 @@
         <div id="tab-1" class="tab-pane <?php echo !isset($_POST['edit_taxonomy']) && !isset($_POST['add_taxonomy']) ? 'active' : '' ?>">
             <div class="table_header">
                 <h3>Manage your Taxonomy</h3> 
-                <!--add custom post type form -->
-                <!--<form method="post" action="" class="inline-block">
-                    <input type="hidden" name="add_post" value="add_post" />
+                <!--add taxonomy form -->
+                <form method="post" action="" class="inline-block">
+                    <input type="hidden" name="add_taxonomy" value="add_taxonomy" />
                     <?php
-                        //submit_button( 'Add New', 'primary small', 'submit', false );
+                        submit_button( 'Add New', 'primary small', 'submit', false );
                     ?>
-                </form> --> 
+                </form> 
             </div>
             <!--looping array of cpt --> 
             <?php
 
-                //$options = get_option( 'yvic_plugin_cpt' ) ?: array();
+                $options = get_option( 'yvic_plugin_tax' ) ?: array();
             ?>
-            <!--<table id="custom_post_type_table">
+            <table id="taxonomy_table">
                 <tr>
                     <th>ID</th>
                     <th>Singular Name</th>
-                    <th>Plural Name</th>
-                    <th>Public</th>
-                    <th>Archive</th>
+                    <th>Hierarchical</th>
                     <th>Actions</th>
-                </tr>-->
+                </tr>
             
             <?php
-
-                //foreach ($options as $option) { 
-                    //$public = ( isset($option['public']) && $option['public'] ) ? 'Yes' : 'No';
-                    //$archive = ( isset($option['has_archive']) && $option['has_archive'] )? 'Yes' : 'No';
+                foreach ($options as $option) { 
+                    //var_dump($options);
+                    //die;
+                    $hierarchical = ( isset($option['hierarchical']) && $option['hierarchical'] ) ? 'Yes' : 'No';
             ?>
-                    <!--<tr>
-                        <td><?//=$option['post_type']?></td>
-                        <td><?//=$option['singular_name']?></td>
-                        <td><?//=$option['plural_name']?></td>
-                        <td><?//=$public?></td>
-                        <td><?//=$archive?></td>
-                        <td>-->
-
-                            <!--edit custom post type form -->
-                            <!--<form method="post" action="" class="inline-block">
-                                <input type="hidden" name="edit_post" value="<?=$option['post_type']?>" />
-                                <?php
-                                    //submit_button( 'Edit', 'primary small', 'submit', false );
-                                ?>
-                            </form>-->
-                            
-                            <!--delete custom post type from array of cpts -->
-
-                            <!--<form method="post" action="options.php" class="inline-block">
-                                <?php
-                                    settings_fields( 'yvic_plugin_cpt_settings' );
-                                ?>
-                                <input type="hidden" name="remove" value="<?=$option['post_type']?>" />
-                                <?php
-                                    //submit_button( 'Delete', 'delete small', 'submit', false, 
-                                        //array(
-                                            //'onclick' => "return confirm('Are you sure you want delete this custom post type? The data associated with it will not be deleted');"
-                                    //) );
-                                ?>
-                            </form> 
+                <tr>
+                    <td><?=$option['taxonomy']?></td>
+                    <td><?=$option['singular_name']?></td>
+                    <td><?=$hierarchical?></td>
+                    <td>
+                        <!--edit taxonomy form -->
+                        <form method="post" action="" class="inline-block">
+                            <input type="hidden" name="edit_taxonomy" value="<?=$option['taxonomy']?>" />
+                            <?php
+                                submit_button( 'Edit', 'primary small', 'submit', false );
+                            ?>
+                        </form>
                         
-                        </td>
-                    </tr>   
+                        <!--delete custom post type from array of cpts -->
+
+                        <form method="post" action="options.php" class="inline-block">
+                            <?php
+                                settings_fields( 'yvic_plugin_tax_settings' );
+                            ?>
+                            <input type="hidden" name="remove" value="<?=$option['taxonomy']?>" />
+                            <?php
+                                submit_button( 'Delete', 'delete small', 'submit', false, 
+                                    array(
+                                        'onclick' => "return confirm('Are you sure you want delete this taxonomy? The data associated with it will not be deleted');"
+                                ) );
+                            ?>
+                        </form> 
+                        
+                    </td>
+                 </tr>   
                 <?php 
-                    //}
+                    }
                 ?>
-            </table>-->
+            </table>
             
         </div>
         <div id="tab-2" class="tab-pane <?php echo isset($_POST['edit_taxonomy']) || isset($_POST['add_taxonomy']) ? 'active' : '' ?> ">

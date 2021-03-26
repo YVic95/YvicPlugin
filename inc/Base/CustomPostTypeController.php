@@ -94,7 +94,7 @@ class CustomPostTypeController extends BaseController
                 'args' => array(
                     'option_name' => 'yvic_plugin_cpt',
                     'label_for' => 'post_type',
-                    'placeholder' => 'hint: genre',
+                    'placeholder' => 'hint: book',
                     'array' => 'post-type'
                 ) 
             ),
