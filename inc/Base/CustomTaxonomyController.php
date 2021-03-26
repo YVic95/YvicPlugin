@@ -155,6 +155,7 @@ class CustomTaxonomyController extends BaseController
         'labels'            => $labels,
         'show_ui'           => true,
         'show_admin_column' => true,
+        'show_in_rest'      => true,
         'query_var'         => true,
         'rewrite'           => array( 'slug' => $option['taxonomy'] )
       );
@@ -169,7 +170,7 @@ class CustomTaxonomyController extends BaseController
 
     foreach( $this->taxonomies as $taxonomy ) {
 
-      register_taxonomy( $taxonomy['rewrite']['slug'], array( 'post' ), $taxonomy );
+      register_taxonomy( $taxonomy['rewrite']['slug'], array( 'book' ), $taxonomy );
     }
       
   }
