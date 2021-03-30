@@ -60,4 +60,13 @@ $off: #374140;
 
 div.ui-toggle {
     @include ui-toggle(25px, $on, $off);
+
+    &.mb-30 {
+        margin-bottom: 30px;
+    }
+}
+
+strong {
+    display: inline-block;
+    margin-left: 10px;
 }

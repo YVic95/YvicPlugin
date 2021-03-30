@@ -123,6 +123,20 @@ class CustomTaxonomyController extends BaseController
             'array'       => 'taxonomy'
         ) 
       ),
+      //associated with taxonomy post type checkboxes
+      array(
+        'id'       => 'objects',
+        'title'    => 'Post Types',
+        'callback' => array( $this->tax_callbacks, 'checkboxPostTypesField' ),
+        'page'     => 'yvic_plugin_tax',
+        'section'  => 'yvic_tax_index',
+        'args'     => array(
+            'option_name' => 'yvic_plugin_tax',
+            'label_for'   => 'objects',
+            'class'       => 'ui-toggle',
+            'array'       => 'taxonomy'
+        ) 
+      ),
     );
 
     $this->settings->setFields( $args );
@@ -157,7 +171,8 @@ class CustomTaxonomyController extends BaseController
         'show_admin_column' => true,
         'show_in_rest'      => true,
         'query_var'         => true,
-        'rewrite'           => array( 'slug' => $option['taxonomy'] )
+        'rewrite'           => array( 'slug' => $option['taxonomy'] ),
+        'objects'           => isset( $option ['objects'] ) ? $option['objects'] : null
       );
 
     }
@@ -170,7 +185,11 @@ class CustomTaxonomyController extends BaseController
 
     foreach( $this->taxonomies as $taxonomy ) {
 
-      register_taxonomy( $taxonomy['rewrite']['slug'], array( 'book' ), $taxonomy );
+      //var_dump($taxonomy);
+
+      $objects = isset( $taxonomy['objects'] ) ? array_keys( $taxonomy['objects'] ) : null;
+
+      register_taxonomy( $taxonomy['rewrite']['slug'], $objects, $taxonomy );
     }
       
   }
