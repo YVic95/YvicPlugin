@@ -41,6 +41,14 @@ class MediaWidget extends WP_Widget
     }
 
     //widget()
+    public function widget( $args, $instance ) {
+        echo $args['before_widget'];
+
+        if( !empty( $instance['title'] ) ) {
+            echo $args['before_title'] . apply_filters( 'widget_title', $instance['title']  ) . $args['after_title'];
+        }
+        echo $args['after_widget'];
+    }
 
     //form()
     public function form( $instance ) {
@@ -63,5 +71,10 @@ class MediaWidget extends WP_Widget
     }
 
     //update()
+    public function update( $new_instance, $old_instance ) {
+        $instance = $old_instance; 
+        $instance['title'] = sanitize_text_field( $new_instance['title'] );
+        return $instance;
+    }
 
 }
