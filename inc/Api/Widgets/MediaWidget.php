@@ -78,7 +78,7 @@ class MediaWidget extends WP_Widget
         <p>
             <label for="<?php echo $imageID ?>">Upload Image</label>
             <input type="text" class="widefat image-upload" id="<?php echo $imageID ?>" name="<?php echo $image_name?>"
-            value="<?php echo esc_attr($image); ?>">
+            value="<?php echo esc_url($image); ?>">
             <button type="button" class="button primary-button js-image-upload">Upload Image</button>
         </p>
 
@@ -91,7 +91,7 @@ class MediaWidget extends WP_Widget
     public function update( $new_instance, $old_instance ) {
         $instance = $old_instance; 
         $instance['title'] = sanitize_text_field( $new_instance['title'] );
-        $instance['image'] = !empty( $instance['image'] ) ? $instance['image'] : '';
+        $instance['image'] = !empty( $new_instance['image'] ) ? $new_instance['image'] : '';
         return $instance;
     }
 
