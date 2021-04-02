@@ -10,31 +10,34 @@ use Inc\Api\Callbacks\AdminCallbacks;
 
 class TestimonialController extends BaseController
 {
-    public $subpages = array();
+  public function register() {
+      
+      if( ! $this->activated( 'testimonial_manager' ) ) { return; }
 
-    public $callbacks;
+      add_action( 'init', array( $this, 'testimonial_post_type' ) );
 
-    public function register() {
-        
-        if( ! $this->activated( 'testimonial_manager' ) ) { return; }
+  }
 
-        $this->settings = new SettingsApi();
-        $this->callbacks = new AdminCallbacks(); 
+  public function testimonial_post_type() {
 
-        $this->setSubpages();
-        $this->settings->addSubPages( $this->subpages )->register();
-    }
+    $labels = array(
+      'name'          => 'Testimonials',
+      'singular_name' => 'Testimonial'
+    );
 
-    public function setSubpages() {
-        $this->subpages = array(
-          array(
-            'parent_slug' => 'yvic_plugin',
-            'page_title' => 'Testimonial',
-            'menu_title' => 'Testimonial Manager',
-            'capability' => 'manage_options', 
-            'menu_slug' => 'yvic_testimonial',
-            'callback' => array( $this->callbacks, 'adminTestimonial') 
-          )
-        );
-    }
+    $args = array(
+      'labels' => $labels,
+      'public' => true,
+      'has_archive' => false,
+      'menu_icon' => 'dashicons-testimonial',
+      'exclude_from_search' => true,
+      'publicly_queriable' => false,
+      'supports' => array( 'title', 'editor' )
+    );
+    
+    register_post_type( 'testimonial', $args );
+
+  }
+
+    
 }
