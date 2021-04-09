@@ -16,6 +16,8 @@ class TestimonialController extends BaseController
 
       add_action( 'init', array( $this, 'testimonial_post_type' ) );
 
+      add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
+
   }
 
   public function testimonial_post_type() {
@@ -36,6 +38,34 @@ class TestimonialController extends BaseController
     );
     
     register_post_type( 'testimonial', $args );
+
+  }
+
+  public function add_meta_boxes() {
+
+    add_meta_box(
+      'testimonial',
+      'Author',
+      array( $this, 'author_box' ),
+      'testimonial',
+      'side',
+      'default'
+    );
+
+  }
+
+  public function author_box( $post ) {
+    
+    wp_nonce_field( 'yvic_testimonial_author', 'yvic_testimonial_author_nonce' );
+
+    $value = get_post_meta( $post->ID, '_yvic_testimonial_author_key', true );
+
+    ?>
+    
+    <label for="yvic_testimonial_author">Testimonial Author</label>
+    <input type="text" id="yvic_testimonial_author" name="yvic_testimonial_author" value="<?php echo esc_attr( $value ); ?>">
+
+    <?php 
 
   }
 
