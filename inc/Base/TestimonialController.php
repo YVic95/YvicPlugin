@@ -18,6 +18,8 @@ class TestimonialController extends BaseController
 
       add_action( 'add_meta_boxes', array( $this, 'add_meta_boxes' ) );
 
+      add_action( 'save_post', array( $this, 'save_meta_post' ) ); 
+
   }
 
   public function testimonial_post_type() {
@@ -52,6 +54,18 @@ class TestimonialController extends BaseController
       'default'
     );
 
+    add_meta_box(
+      'testimonial',
+      'Email address',
+      array( $this, 'author_box' ),
+      'testimonial',
+      'side',
+      'default'
+    );
+
+    //approved (checkbox)
+    //featured (checkbox)
+
   }
 
   public function author_box( $post ) {
@@ -60,13 +74,57 @@ class TestimonialController extends BaseController
 
     $value = get_post_meta( $post->ID, '_yvic_testimonial_author_key', true );
 
-    ?>
+    wp_nonce_field( 'yvic_testimonial_author_email', 'yvic_testimonial_author_email_nonce' );
     
+    $email_value = get_post_meta( $post->ID, '_yvic_testimonial_author_email_key', true );
+
+    ?>
+
     <label for="yvic_testimonial_author">Testimonial Author</label>
     <input type="text" id="yvic_testimonial_author" name="yvic_testimonial_author" value="<?php echo esc_attr( $value ); ?>">
 
+    <label for="yvic_testimonial_author_email">Email Address</label>
+    <input type="text" id="yvic_testimonial_author_email" name="yvic_testimonial_author_email" value="<?php echo esc_attr( $email_value ); ?>">
+
     <?php 
 
+  }
+
+
+  public function save_meta_post( $post_id ) {
+
+    $nonce = $_POST['yvic_testimonial_author_nonce'];
+    $email_nonce = $_POST['yvic_testimonial_author_email_nonce'];
+
+    if( ! isset( $nonce ) || !isset ( $email_nonce ) ) {
+
+      return  $post_id;
+
+    }
+
+    if( ! wp_verify_nonce( $nonce, 'yvic_testimonial_author' ) || ! wp_verify_nonce( $email_nonce, 'yvic_testimonial_author_email' )) {
+
+      return  $post_id;
+
+    }
+
+    if( ! current_user_can( 'edit_post', $post_id ) ) {
+
+      return  $post_id;
+
+    }
+
+    if( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
+      
+      return  $post_id;
+
+    }
+
+    $data = sanitize_text_field( $_POST['yvic_testimonial_author'] ); 
+    update_post_meta( $post_id, '_yvic_testimonial_author_key', $data );
+
+    $email_data = sanitize_text_field( $_POST['yvic_testimonial_author_email'] ); 
+    update_post_meta( $post_id, '_yvic_testimonial_author_email_key', $email_data );
   }
 
     
