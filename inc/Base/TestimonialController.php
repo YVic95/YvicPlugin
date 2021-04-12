@@ -47,14 +47,14 @@ class TestimonialController extends BaseController
       add_meta_box(
         'testimonial_author',
         'Testimonial Options',
-        array( $this, 'render_fetures_box' ),
+        array( $this, 'render_features_box' ),
         'testimonial',
         'side',
         'default'
       );
   }
 
-  public function render_fetures_box( $post ) {
+  public function render_features_box( $post ) {
     
     wp_nonce_field( 'yvic_testimonial', 'yvic_testimonial_nonce' );
 
@@ -96,13 +96,9 @@ class TestimonialController extends BaseController
 
   }
 
-
   public function save_meta_post( $post_id ) {
 
-    $nonce = $_POST['yvic_testimonial_nonce'];
-    // $email_nonce = $_POST['yvic_testimonial_author_email_nonce'];
-    // $approval_nonce = $_POST['yvic_testimonial_author_approval_nonce'];
-    // $featured_nonce = $_POST['yvic_testimonial_author_featured_nonce'];
+    $nonce = isset ( $_POST['yvic_testimonial_nonce'] ) ? $_POST['yvic_testimonial_nonce'] : null;
 
     if( ! isset( $nonce ) ) {
 
