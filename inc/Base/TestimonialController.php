@@ -20,6 +20,8 @@ class TestimonialController extends BaseController
 
       add_action( 'save_post', array( $this, 'save_meta_post' ) ); 
 
+      add_action( 'manage_testimonial_posts_columns', array( $this, 'set_custom_columns' ) );
+
   }
 
   public function testimonial_post_type() {
@@ -137,5 +139,20 @@ class TestimonialController extends BaseController
 
   }
 
-    
+  public function set_custom_columns( $columns ) {
+    //var_dump($columns);
+    //die();
+    $title = $columns['title'];
+    $date = $columns['date'];
+    unset( $columns['title'], $columns['date'] );
+
+    $columns['name'] = 'Author Name';
+    $columns['title'] = $title;
+    $columns['approval_value'] = 'Approved';
+    $columns['featured_value'] = 'Featured';
+    $columns['date'] = $date;
+
+    return $columns;
+  }
+  
 }
