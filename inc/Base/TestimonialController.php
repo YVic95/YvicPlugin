@@ -22,6 +22,10 @@ class TestimonialController extends BaseController
 
       add_action( 'manage_testimonial_posts_columns', array( $this, 'set_custom_columns' ) );
 
+      add_action( 'manage_testimonial_posts_custom_column', array( $this, 'set_custom_columns_data' ), 10, 2 );
+
+      add_filter( 'manage_edit-testimonial_sortable_columns', array( $this, 'set_custom_colums_sortable' ) );
+
   }
 
   public function testimonial_post_type() {
@@ -140,8 +144,7 @@ class TestimonialController extends BaseController
   }
 
   public function set_custom_columns( $columns ) {
-    //var_dump($columns);
-    //die();
+    
     $title = $columns['title'];
     $date = $columns['date'];
     unset( $columns['title'], $columns['date'] );
@@ -153,6 +156,46 @@ class TestimonialController extends BaseController
     $columns['date'] = $date;
 
     return $columns;
+
+  }
+
+  public function set_custom_columns_data( $column, $post_id ) {
+
+    $data = get_post_meta( $post_id, '_yvic_testimonial_key', true );
+
+    $name = isset( $data['name'] ) ? $data['name'] : '';
+
+    $email = isset( $data['email'] ) ? $data['email'] : '';
+
+    $approval_value = isset( $data['approval_value'] ) && $data['approval_value'] === 1 ? '<strong>YES</strong>'  : 'NO';
+
+    $featured_value = isset( $data['featured_value'] ) && $data['featured_value'] === 1 ? '<strong>YES</strong>'  : 'NO';
+
+    switch( $column ) {
+      case 'name': 
+        echo '<strong>'. $name .'</strong><br><a hfer="mailto:'. $email .'">'. $email .'</a>';
+        break;
+      
+      case 'approval_value':
+        echo $approval_value;
+        break;
+
+      case 'featured_value':
+        echo $featured_value;
+        break;
+
+    }
+
+  }
+
+  public function set_custom_colums_sortable( $columns ) {
+
+    $columns['name'] = 'name';
+    $columns['approval_value'] = 'approval_value';
+    $columns['featured_value'] = 'featured_value';
+
+    return $columns;
+
   }
   
 }
