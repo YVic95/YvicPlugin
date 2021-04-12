@@ -44,60 +44,51 @@ class TestimonialController extends BaseController
   }
 
   public function add_meta_boxes() {
-    $meta_box_names = array('Author', 'Email Address', 'Approval', 'Featured');
-    foreach($meta_box_names as $name) {
       add_meta_box(
-        'testimonial',
-        $name,
-        array( $this, 'author_box' ),
+        'testimonial_author',
+        'Testimonial Options',
+        array( $this, 'render_fetures_box' ),
         'testimonial',
         'side',
         'default'
       );
-    }
-  
   }
 
-  public function author_box( $post ) {
+  public function render_fetures_box( $post ) {
     
-    wp_nonce_field( 'yvic_testimonial_author', 'yvic_testimonial_author_nonce' );
+    wp_nonce_field( 'yvic_testimonial', 'yvic_testimonial_nonce' );
 
-    $value = get_post_meta( $post->ID, '_yvic_testimonial_author_key', true );
+    $data = get_post_meta( $post->ID, '_yvic_testimonial_key', true );
 
-    wp_nonce_field( 'yvic_testimonial_author_email', 'yvic_testimonial_author_email_nonce' );
-    
-    $email_value = get_post_meta( $post->ID, '_yvic_testimonial_author_email_key', true );
+    $name = isset( $data['name'] ) ? $data['name'] : '';
 
-    wp_nonce_field( 'yvic_testimonial_author_approval', 'yvic_testimonial_author_approval_nonce' );
-    
-    $approval_value = get_post_meta( $post->ID, '_yvic_testimonial_author_approval_key', true );
+    $email = isset( $data['email'] ) ? $data['email'] : '';
 
-    wp_nonce_field( 'yvic_testimonial_author_featured', 'yvic_testimonial_author_featured_nonce' );
-    
-    $featured_value = get_post_meta( $post->ID, '_yvic_testimonial_author_featured_key', true );
+    $approval_value = isset( $data['approval_value'] ) ? $data['approval_value'] : false;
 
+    $featured_value = isset( $data['featured_value'] ) ? $data['featured_value'] : false;
 
     ?>
 
     <label for="yvic_testimonial_author">Testimonial Author</label>
-    <input type="text" id="yvic_testimonial_author" name="yvic_testimonial_author" value="<?php echo esc_attr( $value ); ?>">
+    <input type="text" id="yvic_testimonial_author" name="yvic_testimonial_author" value="<?php echo esc_attr( $name ); ?>">
 
-    <label for="yvic_testimonial_author_email">Email Address</label>
-    <input type="text" id="yvic_testimonial_author_email" name="yvic_testimonial_author_email" value="<?php echo esc_attr( $email_value ); ?>">
+    <label for="yvic_testimonial_email">Email Address</label>
+    <input type="text" id="yvic_testimonial_email" name="yvic_testimonial_email" value="<?php echo esc_attr( $email ); ?>">
     
     <div class="testimonial_box">
-      <label for="yvic_testimonial_author_approval">Approval</label>
+      <label for="yvic_testimonial_approval">Approved</label>
       <div class="ui-toggle">
-        <input type="checkbox" id="yvic_testimonial_author_approval" name="yvic_testimonial_author_approval" value="1" <?php echo esc_attr( $approval_value ) ? 'checked' : ''; ?>>
-        <label for="yvic_testimonial_author_approval"><div></div></label>
+        <input type="checkbox" id="yvic_testimonial_approval" name="yvic_testimonial_approval" value="1" <?php echo esc_attr( $approval_value ) ? 'checked' : ''; ?>>
+        <label for="yvic_testimonial_approval"><div></div></label>
       </div>
     </div>
 
     <div class="testimonial_box">
-      <label for="yvic_testimonial_author_featured">Featured</label>
+      <label for="yvic_testimonial_featured">Featured</label>
       <div class="ui-toggle">
-        <input type="checkbox" id="yvic_testimonial_author_featured" name="yvic_testimonial_author_featured" value="1" <?php echo esc_attr( $featured_value ) ? 'checked' : ''; ?>>
-        <label for="yvic_testimonial_author_featured"><div></div></label>
+        <input type="checkbox" id="yvic_testimonial_featured" name="yvic_testimonial_featured" value="1" <?php echo esc_attr( $featured_value ) ? 'checked' : ''; ?>>
+        <label for="yvic_testimonial_featured"><div></div></label>
       </div>
     </div>
 
@@ -108,19 +99,18 @@ class TestimonialController extends BaseController
 
   public function save_meta_post( $post_id ) {
 
-    $nonce = $_POST['yvic_testimonial_author_nonce'];
-    $email_nonce = $_POST['yvic_testimonial_author_email_nonce'];
-    $approval_nonce = $_POST['yvic_testimonial_author_approval_nonce'];
-    $featured_nonce = $_POST['yvic_testimonial_author_featured_nonce'];
+    $nonce = $_POST['yvic_testimonial_nonce'];
+    // $email_nonce = $_POST['yvic_testimonial_author_email_nonce'];
+    // $approval_nonce = $_POST['yvic_testimonial_author_approval_nonce'];
+    // $featured_nonce = $_POST['yvic_testimonial_author_featured_nonce'];
 
-    if( ! isset( $nonce ) || ! isset( $email_nonce ) || ! isset( $approval_nonce ) || !isset( $featured_nonce ) ) {
+    if( ! isset( $nonce ) ) {
 
       return  $post_id;
 
     }
    
-    if( ! wp_verify_nonce( $nonce, 'yvic_testimonial_author' ) || ! wp_verify_nonce( $email_nonce, 'yvic_testimonial_author_email' ) || 
-    ! wp_verify_nonce( $approval_nonce, 'yvic_testimonial_author_approval' ) || ! wp_verify_nonce( $featured_nonce, 'yvic_testimonial_author_featured' ) ) {
+    if( ! wp_verify_nonce( $nonce, 'yvic_testimonial' ) ) {
 
       return  $post_id;
 
@@ -138,17 +128,17 @@ class TestimonialController extends BaseController
 
     }
 
-    $data = sanitize_text_field( $_POST['yvic_testimonial_author'] ); 
-    update_post_meta( $post_id, '_yvic_testimonial_author_key', $data );
+    $data = array(
 
-    $email_data = sanitize_text_field( $_POST['yvic_testimonial_author_email'] ); 
-    update_post_meta( $post_id, '_yvic_testimonial_author_email_key', $email_data );
+      'name' => sanitize_text_field( $_POST['yvic_testimonial_author'] ),
+      'email' => sanitize_text_field( $_POST['yvic_testimonial_email'] ),
+      'approval_value' => isset( $_POST['yvic_testimonial_approval'] ) ? 1 : 0,
+      'featured_value' => isset( $_POST['yvic_testimonial_featured'] ) ? 1 : 0
 
-    $approval_data = filter_var($_POST['yvic_testimonial_author_approval'], FILTER_SANITIZE_NUMBER_INT); 
-    update_post_meta( $post_id, '_yvic_testimonial_author_approval_key', $approval_data );
+    );
 
-    $featured_data = filter_var($_POST['yvic_testimonial_author_featured'], FILTER_SANITIZE_NUMBER_INT); 
-    update_post_meta( $post_id, '_yvic_testimonial_author_featured_key', $featured_data );
+    update_post_meta( $post_id, '_yvic_testimonial_key', $data );
+
   }
 
     
