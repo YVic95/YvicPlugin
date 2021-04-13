@@ -37,6 +37,8 @@ class TestimonialController extends BaseController
 
       $this->setShortcodePage();
 
+      add_shortcode( 'testimonial-form', array( $this, 'testimonial_form' ) ); 
+
   }
 
   public function setShortcodePage() {
@@ -223,6 +225,16 @@ class TestimonialController extends BaseController
     $columns['featured_value'] = 'featured_value';
 
     return $columns;
+
+  }
+
+  public function testimonial_form() {
+
+    ob_start();
+
+    require_once( "$this->plugin_path/templates/testimonial-form.php" );
+
+    return ob_get_clean();
 
   }
   
