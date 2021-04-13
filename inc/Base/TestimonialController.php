@@ -234,6 +234,8 @@ class TestimonialController extends BaseController
 
     require_once( "$this->plugin_path/templates/testimonial-form.php" );
 
+    echo "<script src=\"$this->plugin_url/src/js/form.js \"></script>";
+
     return ob_get_clean();
 
   }
