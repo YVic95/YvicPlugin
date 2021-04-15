@@ -232,7 +232,7 @@ class TestimonialController extends BaseController
 
     ob_start();
 
-    echo "<link href=\"$this->plugin_url/assets/css/form.min.css \"></link>";
+    echo "<link rel=\"stylesheet\" href=\"$this->plugin_url/assets/css/form.min.css \" type=\"text/css\" media=\"all\">";
 
     require_once( "$this->plugin_path/templates/testimonial-form.php" );
 

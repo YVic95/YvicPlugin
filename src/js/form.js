@@ -1,3 +1,8 @@
 document.addEventListener( 'DOMContentLoaded', function(e) {
-    console.log('Page is Ready!');
+    let testimonialForm = document.getElementById('yvic-testimonial-form');
+
+    testimonialForm.addEventListener( 'submit', (e) => {
+        e.preventDefault();
+        console.log('Submit has been prevented');
+    } );
 } );

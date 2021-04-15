@@ -1,0 +1,32 @@
+#yvic-testimonial-form {
+    .field-container {
+        position: relative;
+        margin-bottom: 32px;
+        & .msg-holder {
+            display: none;
+            position: absolute;
+            bottom: -28px;
+            left: 8px;
+            &.show {
+                display: block;
+            }
+        }
+    }
+
+    .field-msg {
+        font-size: 12px;
+        text-transform: uppercase;
+        font-weight: 600;
+        letter-spacing: 0.05em;
+    }
+
+
+    .error {
+        color: rgb(128, 10, 10);
+    }
+
+    .success {
+        color: rgb(11, 73, 11);
+    }
+
+}
