@@ -2,21 +2,21 @@
 
 	<div class="field-container">
 		<input type="text" class="field-input" placeholder="Your Name" id="name" name="name" required>
-		<div class="msg-holder">
+		<div class="msg-holder" data-error="invalidName">
 			<small class="field-msg error">Your Name is Required</small>
 		</div>
 	</div>
 
 	<div class="field-container">
 		<input type="email" class="field-input" placeholder="Your Email" id="email" name="email" required>
-		<div class="msg-holder">
+		<div class="msg-holder" data-error="invalidEmail">
 			<small class="field-msg error">Your Email is Required</small>
 		</div>
 	</div>
 
 	<div class="field-container text-box">
 		<textarea name="message" id="message" class="field-input" placeholder="Your Message" required></textarea>
-		<div class="msg-holder">
+		<div class="msg-holder" data-error="invalidMessage">
 			<small class="field-msg error">A Message is Required</small>
 		</div>
 	</div>
