@@ -25,15 +25,17 @@
 		<div>
             <button type="stubmit" class="btn btn-default btn-lg btn-sunset-form">Submit</button>
 		</div>
-		<div class="msg-holder">
-			<small class="field-msg js-form-submission">Submission in process, please wait&hellip;</small>
+		<div class="msg-holder js-form-submission">
+			<small class="field-msg js-form-submission-msg">Submission in process, please wait&hellip;</small>
 		</div>
 		<div class="msg-holder">
 			<small class="field-msg success js-form-success">Message Successfully submitted, thank you!</small>
 		</div>
-		<div class="msg-holder">
-			<small class="field-msg error js-form-error">There was a problem with the Contact Form, please try again!</small>
+		<div class="msg-holder js-form-error">
+			<small class="field-msg error js-form-error-msg">There was a problem with the Contact Form, please try again!</small>
 		</div>
 	</div>
+
+	<input type="hidden" name="action" value="submit_testimonial">
 
 </form>
