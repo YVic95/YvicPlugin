@@ -28,8 +28,8 @@
 		<div class="msg-holder js-form-submission">
 			<small class="field-msg js-form-submission-msg">Submission in process, please wait&hellip;</small>
 		</div>
-		<div class="msg-holder">
-			<small class="field-msg success js-form-success">Message Successfully submitted, thank you!</small>
+		<div class="msg-holder js-form-success">
+			<small class="field-msg success js-form-success-msg">Message Successfully submitted, thank you!</small>
 		</div>
 		<div class="msg-holder js-form-error">
 			<small class="field-msg error js-form-error-msg">There was a problem with the Contact Form, please try again!</small>

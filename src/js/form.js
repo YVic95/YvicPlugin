@@ -35,8 +35,6 @@ document.addEventListener( 'DOMContentLoaded', function(e) {
         let url = testimonialForm.dataset.url;
         let params = new URLSearchParams( new FormData( testimonialForm ) );
 
-        console.log( params);
-
         testimonialForm.querySelector( '.js-form-submission' ).classList.add( 'show' );
         
         fetch( url, {
@@ -49,7 +47,16 @@ document.addEventListener( 'DOMContentLoaded', function(e) {
             })
             .then( response => {
                 resetMessage();
+
                 //dealing with response
+                if( response === 0 || response.status === 'error' ) {
+                    testimonialForm.querySelector( '.js-form-error' ).classList.add( 'show' );
+                    return;
+                }
+
+                testimonialForm.querySelector( '.js-form-success' ).classList.add( 'show' );
+                testimonialForm.reset();
+
             } )
         
     } );

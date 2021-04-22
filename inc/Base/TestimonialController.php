@@ -33,7 +33,7 @@ class TestimonialController extends BaseController
 
       add_action( 'manage_testimonial_posts_custom_column', array( $this, 'set_custom_columns_data' ), 10, 2 );
 
-      add_filter( 'manage_edit-testimonial_sortable_columns', array( $this, 'set_custom_colums_sortable' ) );
+      add_filter( 'manage_edit-testimonial_sortable_columns', array( $this, 'set_custom_columns_sortable' ) );
 
       $this->setShortcodePage();
 
@@ -46,11 +46,56 @@ class TestimonialController extends BaseController
   }
 
   public function submition_testimonial() {
+    
+    //sanitize the data;
 
-    echo 'Yes, I got your post request';
+    $name = sanitize_text_field( $_POST['name'] );
+    $email = sanitize_email( $_POST['email'] );
+    $message = sanitize_textarea_field( $_POST['message'] );
 
+    //store the data to the Testimonial CPT;
+
+    $data = array(
+      'name'           => $name,
+      'email'          => $email,
+      'approval_value' => 0,
+      'featured_value' => 0
+    );
+
+    $args = array(
+      'post_title'   => 'Testimonial from ' . $name,
+      'post_content' => $message,
+      'post_author'  => 1,
+      'post_status'  => 'publish',
+      'post_type'    => 'testimonial',
+      'meta_input'   => array(
+        '_yvic_testimonial_key' => $data
+      ) 
+    );
+
+    $postID = wp_insert_post( $args );
+
+    //send response;
+
+    if( $postID ) {
+
+      $return = array(
+        'status' => 'success',
+        'ID'     => $postID
+      );
+
+      wp_send_json( $return );
+
+      wp_die();
+
+    }
+
+    $return = array(
+      'status' => 'error'
+    );
+
+    wp_send_json( $return );
     wp_die();
-
   }
 
   public function setShortcodePage() {
@@ -175,7 +220,7 @@ class TestimonialController extends BaseController
     $data = array(
 
       'name' => sanitize_text_field( $_POST['yvic_testimonial_author'] ),
-      'email' => sanitize_text_field( $_POST['yvic_testimonial_email'] ),
+      'email' => sanitize_email( $_POST['yvic_testimonial_email'] ),
       'approval_value' => isset( $_POST['yvic_testimonial_approval'] ) ? 1 : 0,
       'featured_value' => isset( $_POST['yvic_testimonial_featured'] ) ? 1 : 0
 
@@ -230,7 +275,7 @@ class TestimonialController extends BaseController
 
   }
 
-  public function set_custom_colums_sortable( $columns ) {
+  public function set_custom_columns_sortable( $columns ) {
 
     $columns['name'] = 'name';
     $columns['approval_value'] = 'approval_value';
