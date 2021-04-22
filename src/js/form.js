@@ -11,7 +11,8 @@ document.addEventListener( 'DOMContentLoaded', function(e) {
         let data = {
             name: document.querySelector( '[name="name"]' ).value,
             email: document.querySelector( '[name="email"]' ).value,
-            message: document.querySelector( '[name="message"]' ).value
+            message: document.querySelector( '[name="message"]' ).value,
+            nonce: document.querySelector( '[name="nonce"]' ).value
         }
         
         //data validation
