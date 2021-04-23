@@ -16,11 +16,19 @@ $args = array(
 $query = new WP_QUERY( $args );
 
 if( $query->have_posts() ) :
-    echo '<ul>';
+    $i = 1;
+    echo '<div class="custom-slider-wrap"><div class="custom-slider-container">
+    <div class="custom-slider-view"><ul>';
+
         while( $query->have_posts() ) : $query->the_post();
-            echo '<li>'. get_the_title() .'<p>'. get_the_content() .'</p></li>';
+            $data = get_post_meta( get_the_ID(),'_yvic_testimonial_key', true );
+            $name = $data['name'] ?? '';
+            echo '<li class="custom-slider-view-slide'.( $i === 1 ? ' is-active' : '' ).'"><p class="testimonial-message">'. get_the_content() .'</p><p>~'. $name .'~</p></li>';
+            $i++;  
         endwhile;
-    echo '</ul>';
+
+    echo '</ul></div><div class="custom-slider-arrows"><span class="arrow arrow-left"></span>
+    <span class="arrow arrow-right"><span></div></div></div>';
 endif;
 
 wp_reset_postdata();
