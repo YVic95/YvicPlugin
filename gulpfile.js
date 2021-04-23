@@ -9,21 +9,23 @@ var buffer = require( 'vinyl-buffer' );
 var uglify = require( 'gulp-uglify' );
 
 var styleSRC = './src/scss/mystyle.scss';
-var styleFront = './src/scss/form.scss';
+var styleForm = './src/scss/form.scss';
+var styleSlider = './src/scss/slider.scss'
 
 var styleDIST = './assets/css/';
 var styleWatch = './src/scss/**/*.scss';
 
 var jsFolder = './src/js/';
 var jsSRC = 'myscript.js';
-var jsFront = 'form.js';
+var jsForm = 'form.js';
+var jsSlider = 'slider.js'
 
 var jsDIST = './assets/js/';
 var jsWatch = './src/js/**/*.js';
-var jsFILES = [jsSRC, jsFront];
+var jsFILES = [jsSRC, jsForm, jsSlider];
 
 gulp.task( 'style', function() {
-  return gulp.src( [styleSRC, styleFront] )
+  return gulp.src( [styleSRC, styleForm, styleSlider] )
     .pipe( sourcemaps.init() )
     .pipe( sass( {
       errorLogToConsole: true,
