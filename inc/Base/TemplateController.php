@@ -3,37 +3,57 @@
  * @package YVicPlugin
  */
 namespace Inc\Base;
-use Inc\Api\SettingsApi;
+
 use Inc\Base\BaseController;
-use Inc\Api\Callbacks\AdminCallbacks;
 
 class TemplateController extends BaseController
 {
-    public $subpages = array();
+  public $templates = array();
 
-    public $callbacks;
+  public function register() {
+      
+    if( ! $this->activated( 'templates_manager' ) ) { return; }
 
-    public function register() {
-        
-        if( ! $this->activated( 'templates_manager' ) ) { return; }
+    $this->templates = array(
+      'page-templates/two-columns-tpl.php' => 'Two Columns Layout'
+    );
 
-        $this->settings = new SettingsApi();
-        $this->callbacks = new AdminCallbacks(); 
+    add_filter( 'theme_page_templates', array( $this, 'custom_template' ) );
 
-        $this->setSubpages();
-        $this->settings->addSubPages( $this->subpages )->register();
+    add_filter( 'template_include', array( $this, 'load_template' ) );
+
+  }
+
+  public function custom_template( $allTemplates ) {
+
+    $allTemplates = array_merge( $allTemplates, $this->templates );
+
+    return $allTemplates;
+
+  }
+
+  public function load_template( $template ) {
+
+    global $post;
+
+    if( ! $post ) {
+      return $template;
     }
 
-    public function setSubpages() {
-        $this->subpages = array(
-          array(
-            'parent_slug' => 'yvic_plugin',
-            'page_title' => 'Templates',
-            'menu_title' => 'Templates Manager',
-            'capability' => 'manage_options', 
-            'menu_slug' => 'yvic_template',
-            'callback' => array( $this->callbacks, 'adminTemplate') 
-          )
-        );
-    }
+    $template_name = get_post_meta( $post->ID, '_wp_page_template', true );
+
+    /*if( !isset ( $this->templates[ $template_name ] ) ) {
+      return $template;
+    } */
+
+    $file = $this->plugin_path . $template_name;
+
+    if( file_exists( $file ) ) {
+      return $file;
+    } 
+
+    return $template;
+
+  } 
+
 }

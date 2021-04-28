@@ -21,7 +21,7 @@ class BaseController
       'media_widget' => 'Activate Media Widget',
       'gallery_manager' => 'Activate Gallery Manager',
       'testimonial_manager' => 'Activate Testimonial Manager',
-      'templates_manager' => 'Activate Templates Manager',
+      'templates_manager' => 'Activate Custom Templates',
       'login_manager' => 'Activate Login Manager',
       'membership_manager' => 'Activate Membership Manager',
       'chat_manager' => 'Activate Chat Manager'
