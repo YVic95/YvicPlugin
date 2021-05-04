@@ -1,0 +1,13 @@
+#yvic-authentication-form {
+    position: absolute;
+    top: 130px;
+    right: 0;
+    z-index: 10;
+
+    .yvic-show-authentication-button {
+        margin: 20px;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+}

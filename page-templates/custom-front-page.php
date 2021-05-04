@@ -1,7 +1,4 @@
 <?php 
-/* 
-    Template Name: Two Columns Layout
-*/
 
 get_header(); ?>
 

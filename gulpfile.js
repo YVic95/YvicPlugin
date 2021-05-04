@@ -10,6 +10,7 @@ var uglify = require( 'gulp-uglify' );
 
 var styleSRC = './src/scss/mystyle.scss';
 var styleForm = './src/scss/form.scss';
+var styleLogin = './src/scss/login.scss';
 var styleSlider = './src/scss/slider.scss'
 
 var styleDIST = './assets/css/';
@@ -18,14 +19,15 @@ var styleWatch = './src/scss/**/*.scss';
 var jsFolder = './src/js/';
 var jsSRC = 'myscript.js';
 var jsForm = 'form.js';
+var jsLogin = 'login.js';
 var jsSlider = 'slider.js'
 
 var jsDIST = './assets/js/';
 var jsWatch = './src/js/**/*.js';
-var jsFILES = [jsSRC, jsForm, jsSlider];
+var jsFILES = [jsSRC, jsForm, jsSlider, jsLogin];
 
 gulp.task( 'style', function() {
-  return gulp.src( [styleSRC, styleForm, styleSlider] )
+  return gulp.src( [styleSRC, styleForm, styleSlider, styleLogin] )
     .pipe( sourcemaps.init() )
     .pipe( sass( {
       errorLogToConsole: true,

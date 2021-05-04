@@ -3,38 +3,38 @@
  * @package YVicPlugin
  */
 namespace Inc\Base;
-use Inc\Api\SettingsApi;
-use Inc\Base\BaseController;
-use Inc\Api\Callbacks\AdminCallbacks;
 
+use Inc\Base\BaseController;
 
 class LoginController extends BaseController
 {
-    public $subpages = array();
+  public function register() {
+      
+    if( ! $this->activated( 'login_manager' ) ) { return; }
 
-    public $callbacks;
+    add_action( 'wp_enqueue_scripts', array( $this, 'enqueue' ) );
 
-    public function register() {
-        
-        if( ! $this->activated( 'login_manager' ) ) { return; }
+    add_action( 'wp_head', array( $this, 'add_login_template' ) );
 
-        $this->settings = new SettingsApi();
-        $this->callbacks = new AdminCallbacks(); 
+  }
 
-        $this->setSubpages();
-        $this->settings->addSubPages( $this->subpages )->register();
+  public function enqueue() {
+    
+    wp_enqueue_style( 'loginStyle', $this->plugin_url . 'assets/css/login.min.css' );
+    wp_enqueue_script( 'loginScript', $this->plugin_url . 'assets/js/login.min.js' );
+
+  }
+
+  public function add_login_template() {
+
+    $file = $this->plugin_path . 'templates/login.php';
+    
+    if( file_exists( $file ) ) {
+
+      load_template( $file, true );
+
     }
 
-    public function setSubpages() {
-        $this->subpages = array(
-          array(
-            'parent_slug' => 'yvic_plugin',
-            'page_title' => 'Login',
-            'menu_title' => 'Login Manager',
-            'capability' => 'manage_options', 
-            'menu_slug' => 'yvic_login',
-            'callback' => array( $this->callbacks, 'adminLogin' ), 
-          )
-        );
-    }
+  }
+
 }
