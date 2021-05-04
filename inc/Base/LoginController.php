@@ -19,6 +19,8 @@ class LoginController extends BaseController
   }
 
   public function enqueue() {
+
+    if( is_user_logged_in() ) { return; }
     
     wp_enqueue_style( 'loginStyle', $this->plugin_url . 'assets/css/login.min.css' );
     wp_enqueue_script( 'loginScript', $this->plugin_url . 'assets/js/login.min.js' );
@@ -26,6 +28,8 @@ class LoginController extends BaseController
   }
 
   public function add_login_template() {
+
+    if( is_user_logged_in() ) { return; }
 
     $file = $this->plugin_path . 'templates/login.php';
     
