@@ -1,6 +1,6 @@
 <form id="yvic-authentication-form" method="post" action="<?php echo admin_url( 'admin-ajax.php' ); ?>">
     <div class="authentication-button">
-        <input class="yvic-show-authentication-button" type="button" value="Login" >
+        <input id="show-btn" class="yvic-show-authentication-button" type="button" value="Login" >
     </div>
     <div id="yvic-authentication-container" class="authentication-container">
         <a id="yvic-authentication-close" class="close" href="#">&times;</a>
