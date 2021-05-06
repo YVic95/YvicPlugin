@@ -1,4 +1,4 @@
-<form id="yvic-authentication-form" method="post" action="<?php echo admin_url( 'admin-ajax.php' ); ?>">
+<form id="yvic-authentication-form" method="post" action="#" data-url="<?php echo admin_url( 'admin-ajax.php' ); ?>">
     <div class="authentication-button">
         <input id="show-btn" class="yvic-show-authentication-button" type="button" value="Login" >
     </div>
@@ -10,11 +10,12 @@
         <label for="password">Password</label>
         <input id="password" type="password" name="password">
         <input class="submit_button" type="submit" value="Login" name="submit">
-        <p class="status"></p>
+        <p class="status" data-message="status"></p>
         <p class="actions">
             <a href="<?php echo wp_lostpassword_url(); ?>">Forgot password?</a> /
             <a href="<?php echo wp_registration_url(); ?>">Registration</a>
         </p>
+        <input type="hidden" name="action" value="yvic_login">
         <?php wp_nonce_field( 'ajax-login-nonce', 'yvic-authentication' ); ?>
     </div>
 </form>

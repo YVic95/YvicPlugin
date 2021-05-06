@@ -16,6 +16,8 @@ class LoginController extends BaseController
 
     add_action( 'wp_head', array( $this, 'add_login_template' ) );
 
+    add_action( 'wp_ajax_nopriv_yvic_login', array( $this, 'login' ) );
+
   }
 
   public function enqueue() {
@@ -38,6 +40,38 @@ class LoginController extends BaseController
       load_template( $file, true );
 
     }
+
+  }
+
+  public function login() {
+
+    check_ajax_referer( 'ajax-login-nonce', 'yvic-authentication' );
+
+    $info = array();
+
+    $info['user_login'] = $_POST['username'];
+    $info['user_password'] = $_POST['password'];
+    $info['remember'] = true;
+    
+    $userSignOn = wp_signon( $info );
+
+    if( is_wp_error( $userSignOn ) ) {
+      echo json_encode(
+        array(
+          'status' => false,
+          'message' => 'Wrong username or password'
+        )
+      );
+      die();
+    }
+
+    echo json_encode(
+      array(
+        'status' => true,
+        'message' => 'Login successfull, redirecting to ...'
+      )
+    );
+    die();
 
   }
 

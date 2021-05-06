@@ -83,4 +83,20 @@
             margin: 0 4px;
         }
     }
+
+    .status {
+        font-size: 15px;
+        text-transform: uppercase;
+        margin: 0 4px;
+        letter-spacing: 2px;
+        text-align: center;
+
+        &.error {
+            color: rgb(128, 0, 0);
+        }
+
+        &.success {
+            color: rgb(46, 139, 87);
+        }
+    }
 }
